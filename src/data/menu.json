@@ -1,0 +1,918 @@
+{
+  "id": "root",
+  "title": "Explore",
+  "children": [
+    {
+      "id": "science",
+      "title": "Science",
+      "children": [
+        {
+          "id": "physics",
+          "title": "Physics",
+          "children": [
+            {
+              "id": "physicists",
+              "title": "Physicists",
+              "children": [
+                {
+                  "title": "Albert Einstein",
+                  "id": "albert-einstein",
+                  "entityType": "person",
+                  "wikidataId": "Q937"
+                },
+                {
+                  "title": "Isaac Newton",
+                  "id": "isaac-newton",
+                  "entityType": "person",
+                  "wikidataId": "Q935"
+                },
+                {
+                  "title": "Stephen Hawking",
+                  "id": "stephen-hawking",
+                  "entityType": "person",
+                  "wikidataId": "Q17714"
+                },
+                {
+                  "title": "Richard Feynman",
+                  "id": "richard-feynman",
+                  "entityType": "person",
+                  "wikidataId": "Q39246"
+                },
+                {
+                  "title": "Niels Bohr",
+                  "id": "niels-bohr",
+                  "entityType": "person",
+                  "wikidataId": "Q7082"
+                },
+                {
+                  "title": "Erwin Schrödinger",
+                  "id": "erwin-schrödinger",
+                  "entityType": "person",
+                  "wikidataId": "Q9031"
+                },
+                {
+                  "title": "Werner Heisenberg",
+                  "id": "werner-heisenberg",
+                  "entityType": "person",
+                  "wikidataId": "Q40904"
+                },
+                {
+                  "title": "Max Planck",
+                  "id": "max-planck",
+                  "entityType": "person",
+                  "wikidataId": "Q9021"
+                }
+              ]
+            },
+            {
+              "id": "physics-theories",
+              "title": "Theories & Concepts",
+              "children": [
+                {
+                  "title": "Theory of Relativity",
+                  "id": "theory-of-relativity",
+                  "entityType": "concept",
+                  "wikidataId": "Q43514"
+                },
+                {
+                  "title": "Quantum Mechanics",
+                  "id": "quantum-mechanics",
+                  "entityType": "concept",
+                  "wikidataId": "Q944"
+                },
+                {
+                  "title": "Classical Mechanics",
+                  "id": "classical-mechanics",
+                  "entityType": "concept",
+                  "wikidataId": "Q11397"
+                },
+                {
+                  "title": "General Relativity",
+                  "id": "general-relativity",
+                  "entityType": "concept",
+                  "wikidataId": "Q130357303"
+                },
+                {
+                  "title": "Special Relativity",
+                  "id": "special-relativity",
+                  "entityType": "concept",
+                  "wikidataId": "Q11455"
+                },
+                {
+                  "title": "String Theory",
+                  "id": "string-theory",
+                  "entityType": "concept",
+                  "wikidataId": "Q33198"
+                },
+                {
+                  "title": "Standard Model",
+                  "id": "standard-model",
+                  "entityType": "concept",
+                  "wikidataId": "Q18338"
+                }
+              ]
+            },
+            {
+              "id": "astronomy",
+              "title": "Astronomy",
+              "children": [
+                {
+                  "title": "Solar System",
+                  "id": "solar-system",
+                  "entityType": "concept",
+                  "wikidataId": "Q544"
+                },
+                {
+                  "title": "Black Hole",
+                  "id": "black-hole",
+                  "entityType": "concept",
+                  "wikidataId": "Q589"
+                },
+                {
+                  "title": "Galaxy",
+                  "id": "galaxy",
+                  "entityType": "concept",
+                  "wikidataId": "Q318"
+                },
+                {
+                  "title": "Star",
+                  "id": "star",
+                  "entityType": "concept",
+                  "wikidataId": "Q523"
+                },
+                {
+                  "title": "Supernova",
+                  "id": "supernova",
+                  "entityType": "concept",
+                  "wikidataId": "Q3937"
+                },
+                {
+                  "title": "Neutron Star",
+                  "id": "neutron-star",
+                  "entityType": "concept",
+                  "wikidataId": "Q169474"
+                },
+                {
+                  "title": "Exoplanet",
+                  "id": "exoplanet",
+                  "entityType": "concept",
+                  "wikidataId": "Q44559"
+                },
+                {
+                  "title": "Milky Way",
+                  "id": "milky-way",
+                  "entityType": "concept",
+                  "wikidataId": "Q14319"
+                }
+              ]
+            },
+            {
+              "id": "cosmology",
+              "title": "Cosmology",
+              "children": [
+                {
+                  "title": "Big Bang",
+                  "id": "big-bang",
+                  "entityType": "concept",
+                  "wikidataId": "Q323"
+                },
+                {
+                  "title": "Observable Universe",
+                  "id": "observable-universe",
+                  "entityType": "concept",
+                  "wikidataId": "Q221392"
+                },
+                {
+                  "title": "Dark Matter",
+                  "id": "dark-matter",
+                  "entityType": "concept",
+                  "wikidataId": "Q79925"
+                },
+                {
+                  "title": "Dark Energy",
+                  "id": "dark-energy",
+                  "entityType": "concept",
+                  "wikidataId": "Q18343"
+                },
+                {
+                  "title": "Cosmic Microwave Background",
+                  "id": "cosmic-microwave-background",
+                  "entityType": "concept",
+                  "wikidataId": "Q15605"
+                },
+                {
+                  "title": "Inflation",
+                  "id": "inflation",
+                  "entityType": "concept",
+                  "wikidataId": "Q273508"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "biology",
+          "title": "Biology",
+          "children": [
+            {
+              "id": "biologists",
+              "title": "Biologists & Naturalists",
+              "children": [
+                {
+                  "title": "Charles Darwin",
+                  "id": "charles-darwin",
+                  "entityType": "person",
+                  "wikidataId": "Q1035"
+                },
+                {
+                  "title": "Gregor Mendel",
+                  "id": "gregor-mendel",
+                  "entityType": "person",
+                  "wikidataId": "Q37970"
+                },
+                {
+                  "title": "Jane Goodall",
+                  "id": "jane-goodall",
+                  "entityType": "person",
+                  "wikidataId": "Q184746"
+                },
+                {
+                  "title": "Alfred Russel Wallace",
+                  "id": "alfred-russel-wallace",
+                  "entityType": "person",
+                  "wikidataId": "Q160627"
+                },
+                {
+                  "title": "Rosalind Franklin",
+                  "id": "rosalind-franklin",
+                  "entityType": "person",
+                  "wikidataId": "Q7474"
+                },
+                {
+                  "title": "James Watson",
+                  "id": "james-watson",
+                  "entityType": "person",
+                  "wikidataId": "Q83333"
+                },
+                {
+                  "title": "Francis Crick",
+                  "id": "francis-crick",
+                  "entityType": "person",
+                  "wikidataId": "Q123280"
+                }
+              ]
+            },
+            {
+              "id": "evolution",
+              "title": "Evolution",
+              "children": [
+                {
+                  "title": "Evolution",
+                  "id": "evolution",
+                  "entityType": "concept",
+                  "wikidataId": "Q1063"
+                },
+                {
+                  "title": "Natural Selection",
+                  "id": "natural-selection",
+                  "entityType": "concept",
+                  "wikidataId": "Q43478"
+                },
+                {
+                  "title": "Sexual Selection",
+                  "id": "sexual-selection",
+                  "entityType": "concept",
+                  "wikidataId": "Q206913"
+                },
+                {
+                  "title": "Human Evolution",
+                  "id": "human-evolution",
+                  "entityType": "concept",
+                  "wikidataId": "Q83944"
+                }
+              ]
+            },
+            {
+              "id": "genetics",
+              "title": "Genetics",
+              "children": [
+                {
+                  "title": "Genetics",
+                  "id": "genetics",
+                  "entityType": "concept",
+                  "wikidataId": "Q7162"
+                },
+                {
+                  "title": "DNA",
+                  "id": "dna",
+                  "entityType": "concept",
+                  "wikidataId": "Q7430"
+                },
+                {
+                  "title": "Gene",
+                  "id": "gene",
+                  "entityType": "concept",
+                  "wikidataId": "Q7187"
+                },
+                {
+                  "title": "Genome",
+                  "id": "genome",
+                  "entityType": "concept",
+                  "wikidataId": "Q7020"
+                },
+                {
+                  "title": "Genetic Engineering",
+                  "id": "genetic-engineering",
+                  "entityType": "concept",
+                  "wikidataId": "Q159236"
+                },
+                {
+                  "title": "CRISPR",
+                  "id": "crispr",
+                  "entityType": "concept",
+                  "wikidataId": "Q412563"
+                }
+              ]
+            },
+            {
+              "id": "human-biology",
+              "title": "Human Biology",
+              "children": [
+                {
+                  "title": "Human Body",
+                  "id": "human-body",
+                  "entityType": "concept",
+                  "wikidataId": "Q23852"
+                },
+                {
+                  "title": "Human Brain",
+                  "id": "human-brain",
+                  "entityType": "concept",
+                  "wikidataId": "Q492038"
+                },
+                {
+                  "title": "Nervous System",
+                  "id": "nervous-system",
+                  "entityType": "concept",
+                  "wikidataId": "Q9404"
+                },
+                {
+                  "title": "Immune System",
+                  "id": "immune-system",
+                  "entityType": "concept",
+                  "wikidataId": "Q1059"
+                },
+                {
+                  "title": "Human Digestive System",
+                  "id": "human-digestive-system",
+                  "entityType": "concept",
+                  "wikidataId": "Q9649"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "chemistry",
+          "title": "Chemistry",
+          "children": [
+            {
+              "id": "chemists",
+              "title": "Chemists",
+              "children": [
+                {
+                  "title": "Marie Curie",
+                  "id": "marie-curie",
+                  "entityType": "person",
+                  "wikidataId": "Q7186"
+                },
+                {
+                  "title": "Dmitri Mendeleev",
+                  "id": "dmitri-mendeleev",
+                  "entityType": "person",
+                  "wikidataId": "Q9106"
+                },
+                {
+                  "title": "Antoine Lavoisier",
+                  "id": "antoine-lavoisier",
+                  "entityType": "person",
+                  "wikidataId": "Q39607"
+                },
+                {
+                  "title": "Linus Pauling",
+                  "id": "linus-pauling",
+                  "entityType": "person",
+                  "wikidataId": "Q48983"
+                },
+                {
+                  "title": "Dorothy Hodgkin",
+                  "id": "dorothy-hodgkin",
+                  "entityType": "person",
+                  "wikidataId": "Q7487"
+                }
+              ]
+            },
+            {
+              "id": "elements",
+              "title": "Chemical Elements",
+              "children": [
+                {
+                  "title": "Hydrogen",
+                  "id": "hydrogen",
+                  "entityType": "concept",
+                  "wikidataId": "Q556"
+                },
+                {
+                  "title": "Oxygen",
+                  "id": "oxygen",
+                  "entityType": "concept",
+                  "wikidataId": "Q629"
+                },
+                {
+                  "title": "Carbon",
+                  "id": "carbon",
+                  "entityType": "concept",
+                  "wikidataId": "Q623"
+                },
+                {
+                  "title": "Gold",
+                  "id": "gold",
+                  "entityType": "concept",
+                  "wikidataId": "Q897"
+                },
+                {
+                  "title": "Iron",
+                  "id": "iron",
+                  "entityType": "concept",
+                  "wikidataId": "Q677"
+                },
+                {
+                  "title": "Uranium",
+                  "id": "uranium",
+                  "entityType": "concept",
+                  "wikidataId": "Q1098"
+                }
+              ]
+            },
+            {
+              "id": "chemistry-concepts",
+              "title": "Chemistry Concepts",
+              "children": [
+                {
+                  "title": "Atom",
+                  "id": "atom",
+                  "entityType": "concept",
+                  "wikidataId": "Q9121"
+                },
+                {
+                  "title": "Molecule",
+                  "id": "molecule",
+                  "entityType": "concept",
+                  "wikidataId": "Q11369"
+                },
+                {
+                  "title": "Chemical Bond",
+                  "id": "chemical-bond",
+                  "entityType": "concept",
+                  "wikidataId": "Q44424"
+                },
+                {
+                  "title": "Chemical Reaction",
+                  "id": "chemical-reaction",
+                  "entityType": "concept",
+                  "wikidataId": "Q36534"
+                },
+                {
+                  "title": "Acid",
+                  "id": "acid",
+                  "entityType": "concept",
+                  "wikidataId": "Q11158"
+                },
+                {
+                  "title": "Base (chemistry)",
+                  "id": "base-chemistry",
+                  "entityType": "concept",
+                  "wikidataId": "Q11193"
+                }
+              ]
+            },
+            {
+              "id": "periodic-table",
+              "title": "Periodic Table",
+              "children": [
+                {
+                  "title": "Periodic Table",
+                  "id": "periodic-table",
+                  "entityType": "concept",
+                  "wikidataId": "Q10693"
+                },
+                {
+                  "title": "Alkali Metal",
+                  "id": "alkali-metal",
+                  "entityType": "concept",
+                  "wikidataId": "Q19557"
+                },
+                {
+                  "title": "Noble Gas",
+                  "id": "noble-gas",
+                  "entityType": "concept",
+                  "wikidataId": "Q19609"
+                },
+                {
+                  "title": "Transition Metal",
+                  "id": "transition-metal",
+                  "entityType": "concept",
+                  "wikidataId": "Q19588"
+                },
+                {
+                  "title": "Lanthanide",
+                  "id": "lanthanide",
+                  "entityType": "concept",
+                  "wikidataId": "Q19569"
+                },
+                {
+                  "title": "Actinide",
+                  "id": "actinide",
+                  "entityType": "concept",
+                  "wikidataId": "Q19577"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "psychology",
+          "title": "Psychology",
+          "children": [
+            {
+              "id": "psychologists",
+              "title": "Psychologists",
+              "children": [
+                {
+                  "title": "Sigmund Freud",
+                  "id": "sigmund-freud",
+                  "entityType": "person",
+                  "wikidataId": "Q9215"
+                },
+                {
+                  "title": "Carl Jung",
+                  "id": "carl-jung",
+                  "entityType": "person",
+                  "wikidataId": "Q34661"
+                },
+                {
+                  "title": "B. F. Skinner",
+                  "id": "b.-f.-skinner",
+                  "entityType": "person",
+                  "wikidataId": "Q213195"
+                },
+                {
+                  "title": "Jean Piaget",
+                  "id": "jean-piaget",
+                  "entityType": "person",
+                  "wikidataId": "Q123190"
+                },
+                {
+                  "title": "Daniel Kahneman",
+                  "id": "daniel-kahneman",
+                  "entityType": "person",
+                  "wikidataId": "Q233950"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "science-communication",
+          "title": "Science Communication",
+          "children": [
+            {
+              "id": "science-communicators",
+              "title": "Science Communicators",
+              "children": [
+                {
+                  "title": "Richard Dawkins",
+                  "id": "richard-dawkins",
+                  "entityType": "person",
+                  "wikidataId": "Q44461"
+                },
+                {
+                  "title": "Neil deGrasse Tyson",
+                  "id": "neil-degrasse-tyson",
+                  "entityType": "person",
+                  "wikidataId": "Q310903"
+                },
+                {
+                  "title": "Carl Sagan",
+                  "id": "carl-sagan",
+                  "entityType": "person",
+                  "wikidataId": "Q410"
+                },
+                {
+                  "title": "Bill Nye",
+                  "id": "bill-nye",
+                  "entityType": "person",
+                  "wikidataId": "Q2619019"
+                },
+                {
+                  "title": "Brian Cox",
+                  "id": "brian-cox",
+                  "entityType": "person",
+                  "wikidataId": "Q463581"
+                },
+                {
+                  "title": "David Attenborough",
+                  "id": "david-attenborough",
+                  "entityType": "person",
+                  "wikidataId": "Q181014"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "title": "History",
+      "children": [
+        {
+          "id": "ancient-history",
+          "title": "Ancient History",
+          "children": [
+            {
+              "id": "ancient-egypt",
+              "title": "Ancient Egypt",
+              "entityType": "concept",
+              "wikidataId": "Q11768"
+            },
+            {
+              "id": "roman-empire",
+              "title": "Roman Empire",
+              "entityType": "concept",
+              "wikidataId": "Q2277"
+            }
+          ]
+        },
+        {
+          "id": "modern-history",
+          "title": "Modern History",
+          "children": [
+            {
+              "id": "world-war-ii",
+              "title": "World War II",
+              "entityType": "concept",
+              "wikidataId": "Q362"
+            },
+            {
+              "id": "french-revolution",
+              "title": "French Revolution",
+              "entityType": "concept",
+              "wikidataId": "Q6534"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "title": "Technology",
+      "children": [
+        {
+          "id": "computing",
+          "title": "Computing",
+          "children": [
+            {
+              "id": "internet",
+              "title": "Internet",
+              "entityType": "concept",
+              "wikidataId": "Q75"
+            },
+            {
+              "id": "world-wide-web",
+              "title": "World Wide Web",
+              "entityType": "concept",
+              "wikidataId": "Q466"
+            }
+          ]
+        },
+        {
+          "id": "artificial-intelligence",
+          "title": "Artificial Intelligence",
+          "children": [
+            {
+              "id": "artificial-intelligence-concept",
+              "title": "Artificial Intelligence",
+              "entityType": "concept",
+              "wikidataId": "Q11660"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geography",
+      "title": "Geography",
+      "children": [
+        {
+          "id": "continents",
+          "title": "Continents",
+          "children": [
+            {
+              "id": "europe",
+              "title": "Europe",
+              "entityType": "concept",
+              "wikidataId": "Q46"
+            },
+            {
+              "id": "asia",
+              "title": "Asia",
+              "entityType": "concept",
+              "wikidataId": "Q48"
+            }
+          ]
+        },
+        {
+          "id": "landscapes",
+          "title": "Landscapes",
+          "children": [
+            {
+              "id": "sahara",
+              "title": "Sahara",
+              "entityType": "concept",
+              "wikidataId": "Q6583"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arts",
+      "title": "Arts",
+      "children": [
+        {
+          "id": "visual-arts",
+          "title": "Visual Arts",
+          "children": [
+            {
+              "id": "painting",
+              "title": "Painting",
+              "entityType": "concept",
+              "wikidataId": "Q3305213"
+            },
+            {
+              "id": "photography",
+              "title": "Photography",
+              "entityType": "concept",
+              "wikidataId": "Q11633"
+            }
+          ]
+        },
+        {
+          "id": "art-movements",
+          "title": "Art Movements",
+          "children": [
+            {
+              "id": "renaissance",
+              "title": "Renaissance",
+              "entityType": "concept",
+              "wikidataId": "Q4692"
+            },
+            {
+              "id": "impressionism",
+              "title": "Impressionism",
+              "entityType": "concept",
+              "wikidataId": "Q40415"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nature",
+      "title": "Nature",
+      "children": [
+        {
+          "id": "life",
+          "title": "Life",
+          "children": [
+            {
+              "id": "evolution",
+              "title": "Evolution",
+              "entityType": "concept",
+              "wikidataId": "Q1063"
+            },
+            {
+              "id": "bee",
+              "title": "Bee",
+              "entityType": "concept",
+              "wikidataId": "Q7391"
+            }
+          ]
+        },
+        {
+          "id": "earth",
+          "title": "Earth",
+          "children": [
+            {
+              "id": "earth",
+              "title": "Earth",
+              "entityType": "concept",
+              "wikidataId": "Q2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "society",
+      "title": "Society",
+      "children": [
+        {
+          "id": "politics",
+          "title": "Politics",
+          "children": [
+            {
+              "id": "democracy",
+              "title": "Democracy",
+              "entityType": "concept",
+              "wikidataId": "Q7176"
+            }
+          ]
+        },
+        {
+          "id": "economics",
+          "title": "Economics",
+          "children": [
+            {
+              "id": "capitalism",
+              "title": "Capitalism",
+              "entityType": "concept",
+              "wikidataId": "Q8134"
+            }
+          ]
+        },
+        {
+          "id": "human-rights",
+          "title": "Human Rights",
+          "children": [
+            {
+              "id": "human-rights-concept",
+              "title": "Human Rights",
+              "entityType": "concept",
+              "wikidataId": "Q8458"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sports",
+      "title": "Sports",
+      "children": [
+        {
+          "id": "team-sports",
+          "title": "Team Sports",
+          "children": [
+            {
+              "id": "football",
+              "title": "Football",
+              "entityType": "concept",
+              "wikidataId": "Q2736"
+            },
+            {
+              "id": "basketball",
+              "title": "Basketball",
+              "entityType": "concept",
+              "wikidataId": "Q5372"
+            }
+          ]
+        },
+        {
+          "id": "racket-sports",
+          "title": "Racket Sports",
+          "children": [
+            {
+              "id": "tennis",
+              "title": "Tennis",
+              "entityType": "concept",
+              "wikidataId": "Q847"
+            }
+          ]
+        },
+        {
+          "id": "major-events",
+          "title": "Major Events",
+          "children": [
+            {
+              "id": "olympic-games",
+              "title": "Olympic Games",
+              "entityType": "concept",
+              "wikidataId": "Q5389"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
