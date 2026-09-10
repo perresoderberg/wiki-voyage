@@ -1,55 +1,76 @@
-import type { MenuItem } from "../../../types/menu";
 import { useEffect, useState } from "react";
-import { getWikipediaSummary } from "../../../services/wikipedia-api";
-import type { WikipediaArticle } from "../../../types/wikipedia";
-import { searchCommons } from "../../../services/commons-api";
-import { getWikidataPerson } from "../../../services/wikidata-api";
-import type { WikidataPerson } from "../../../types/wikidata";
 import type { CommonsSearchResult } from "../../../types/commons";
+import type { MenuItem } from "../../../types/menu";
+import type { WikidataEntity } from "../../../types/wikidata";
+import type { WikipediaArticle } from "../../../types/wikipedia";
+import { SourceTabs } from "./content/SourceTabs";
 import { EntityImage } from "./header/EntityImage";
 import { EntityInfo } from "./header/EntityInfo";
+import { searchCommons } from "../../../services/commons-api";
+import { getWikipediaSummary } from "../../../services/wikipedia-api";
+import { getWikidataEntity } from "../../../services/wikidata-api";
 
 export function EntityPage({ item }: { item: MenuItem }) {
-  console.log(item);
-
-  const [wikipediaSummary, setWikipediaSummary] =
-    useState<WikipediaArticle | null>(null);
-  const [wikidataPerson, setWikidataPerson] = useState<WikidataPerson | null>(
-    null,
-  );
-
+  const [wikipediaSummary, setWikipediaSummary] = useState<WikipediaArticle>();
+  const [wikidataEntry, setWikidataEntry] = useState<WikidataEntity>();
   const [commonsImages, setCommonsImages] =
     useState<CommonsSearchResult | null>(null);
 
+  const IMAGES_LIMIT = 30;
+
   useEffect(() => {
-    async function fetchWikipedia() {
+    async function fetchData() {
+      setWikipediaSummary(undefined);
+      setWikidataEntry(undefined);
+      setCommonsImages(null);
+
       const wikiSummary = await getWikipediaSummary(item.title);
-      if (!wikiSummary) return null;
 
       setWikipediaSummary(wikiSummary);
 
-      const cmomonImages = await searchCommons(wikiSummary.title, 5);
-      if (!cmomonImages) return null;
+      const commonsData = await searchCommons(wikiSummary.title, IMAGES_LIMIT);
 
-      setCommonsImages(cmomonImages);
+      setCommonsImages(commonsData);
 
-      if (wikiSummary.wikidataId) {
-        const wikiPerson = await getWikidataPerson(wikiSummary.wikidataId);
-        setWikidataPerson(wikiPerson);
+      if (item.wikidataId && item.entityType) {
+        const wikidataData = await getWikidataEntity(
+          item.wikidataId,
+          item.entityType,
+          item.conceptType,
+        );
+
+        setWikidataEntry(wikidataData);
       }
     }
-    fetchWikipedia();
+
+    fetchData();
   }, [item]);
 
   return (
     <>
-      <h2 className="text-2xl font-extrabold text-center text-white bg-black">
-        {wikipediaSummary?.title}
-      </h2>
-      {wikipediaSummary?.imageUrl && (
-        <EntityImage imageUrl={wikipediaSummary.imageUrl} />
+      {!wikipediaSummary || !wikidataEntry ? (
+        <div className="p-4">Loading...</div>
+      ) : (
+        <>
+          <h2 className="bg-black text-center text-2xl font-extrabold text-white">
+            {wikipediaSummary.title}
+          </h2>
+
+          <section className="flex items-start gap-4">
+            {wikipediaSummary.imageUrl && (
+              <EntityImage imageUrl={wikipediaSummary.imageUrl} />
+            )}
+
+            <EntityInfo entity={wikidataEntry} />
+          </section>
+
+          <SourceTabs
+            wikipedia={wikipediaSummary}
+            wikidata={wikidataEntry}
+            commons={commonsImages}
+          />
+        </>
       )}
-      {wikidataPerson && <EntityInfo person={wikidataPerson} />}
     </>
   );
 }

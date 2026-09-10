@@ -1,8 +1,11 @@
+import type { ConceptType, EntityType } from "./wikidata";
+
 export type MenuItem = {
   id: string;
   title: string;
   children?: MenuItem[];
-  entityType?: "person" | "concept";
+  entityType?: EntityType;
+  conceptType?: ConceptType;
   wikidataId?: string;
 };
 
@@ -11,5 +14,6 @@ export type MenuJsonItem = {
   title: string;
   children?: MenuJsonItem[];
   entityType?: string;
+  conceptType?: string;
   wikidataId?: string;
 };

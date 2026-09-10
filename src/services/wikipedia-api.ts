@@ -24,12 +24,14 @@ export async function getWikipediaSummary(
   const encodedTitle = encodeURIComponent(pageTitle);
 
   const response = await fetch(`${WIKIPEDIA_API}/page/summary/${encodedTitle}`);
+  console.log("getWikipediaSummary response", response);
 
   if (!response.ok) {
     throw new Error(`Wikipedia summary failed: ${response.status}`);
   }
 
   const data: WikipediaSummaryResponse = await response.json();
+  console.log("getWikipediaSummary data", data);
 
   return {
     title: data.title,

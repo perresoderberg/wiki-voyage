@@ -1,7 +1,7 @@
 export function Logo() {
   return (
     <>
-      <span className="ml-10 text-2xl">Wiki Voyage</span>
+      <span className="text-2xl font-semibold text-gray-800">WikiVoyage</span>
     </>
   );
 }

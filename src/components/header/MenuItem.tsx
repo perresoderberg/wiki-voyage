@@ -76,8 +76,6 @@ export default function MenuItem({
     <li className="relative" onMouseEnter={handleMouseEnter}>
       <button type="button" onClick={handleClick} className={menuItemStyle}>
         <span>{item.title}</span>
-
-        {hasChildren && <span className="text-gray-400">›</span>}
       </button>
 
       {hasChildren && isOpen && item.children && (
