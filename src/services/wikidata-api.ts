@@ -3,6 +3,7 @@ import type {
   EntityType,
   WikidataEntity,
   WikidataEntityBase,
+  WikidataLink,
   WikidataStatement,
 } from "../types/wikidata";
 
@@ -243,41 +244,49 @@ async function fetchEntityData(
       ?propertyName
       ?value
       ?valueLabel
+      ?article
       ?latitude
       ?longitude
-
+  
     WHERE {
       VALUES ?property {
         ${propertyIds}
       }
-
+  
       wd:${wikidataId} ?property ?value.
-
+  
       OPTIONAL {
         ?value rdfs:label ?valueLabel.
         FILTER(LANG(?valueLabel) = "en")
       }
-
+  
+      OPTIONAL {
+        FILTER(isIRI(?value))
+  
+        ?article schema:about ?value.
+        ?article schema:isPartOf <https://en.wikipedia.org/>.
+      }
+  
       OPTIONAL {
         ?value wikibase:geoLatitude ?latitude.
         ?value wikibase:geoLongitude ?longitude.
       }
-
+  
       BIND(
         REPLACE(STR(?property), ".*/", "")
         AS ?propertyName
       )
-
+  
       OPTIONAL {
         wd:${wikidataId} rdfs:label ?itemLabel.
         FILTER(LANG(?itemLabel) = "en")
       }
-
+  
       OPTIONAL {
         wd:${wikidataId} schema:description ?itemDescription.
         FILTER(LANG(?itemDescription) = "en")
       }
-
+  
       OPTIONAL {
         wd:${wikidataId} wdt:P18 ?image.
       }
@@ -389,6 +398,30 @@ export async function getWikidataStatements(
   return [...uniqueStatements.values()];
 }
 
+function getLinks(
+  bindings: SparqlBinding[],
+  propertyId: string,
+): WikidataLink[] {
+  return bindings
+    .filter((binding) => getValue(binding, "propertyName") === propertyId)
+    .map((binding) => {
+      const value = getValue(binding, "value");
+      const label = getValue(binding, "valueLabel");
+      const wikipediaUrl = getValue(binding, "article");
+
+      if (!value || !label) {
+        return null;
+      }
+
+      return {
+        id: value.split("/").pop()!,
+        label,
+        wikipediaUrl,
+      };
+    })
+    .filter((link): link is WikidataLink => link !== null);
+}
+
 function getCommonData(
   wikidataId: string,
   bindings: SparqlBinding[],
@@ -400,21 +433,8 @@ function getCommonData(
     name: getValue(first, "itemLabel"),
     description: getValue(first, "itemDescription"),
 
-    instanceOf: bindings
-      .filter((binding) => getValue(binding, "propertyName") === "P31")
-      .map(
-        (binding) =>
-          getValue(binding, "valueLabel") ?? getValue(binding, "value"),
-      )
-      .filter((value): value is string => value !== null),
-
-    subclassOf: bindings
-      .filter((binding) => getValue(binding, "propertyName") === "P279")
-      .map(
-        (binding) =>
-          getValue(binding, "valueLabel") ?? getValue(binding, "value"),
-      )
-      .filter((value): value is string => value !== null),
+    instanceOf: getLinks(bindings, "P31"),
+    subclassOf: getLinks(bindings, "P279"),
 
     imageUrl: getValue(first, "image"),
   };
@@ -434,11 +454,27 @@ export async function getWikidataEntity(
   const values = (propertyId: string): string[] =>
     bindings
       .filter((binding) => getValue(binding, "propertyName") === propertyId)
-      .map(
-        (binding) =>
-          getValue(binding, "valueLabel") ?? getValue(binding, "value"),
-      )
+      .map((binding) => getValue(binding, "value"))
       .filter((value): value is string => value !== null);
+
+  const links = (propertyId: string): WikidataLink[] =>
+    bindings
+      .filter((binding) => getValue(binding, "propertyName") === propertyId)
+      .map((binding) => {
+        const id = getValue(binding, "value");
+        const label = getValue(binding, "valueLabel");
+
+        if (!id || !label) {
+          return null;
+        }
+
+        return {
+          id: id.replace("http://www.wikidata.org/entity/", ""),
+          label,
+          wikipediaUrl: getValue(binding, "article"),
+        };
+      })
+      .filter((link): link is WikidataLink => link !== null);
 
   switch (entityType) {
     case "person":
@@ -447,39 +483,39 @@ export async function getWikidataEntity(
         ...common,
         birthDate: getDate(bindings, "P569"),
         deathDate: getDate(bindings, "P570"),
-        birthPlace: values("P19")[0] ?? null,
-        deathPlace: values("P20")[0] ?? null,
-        occupations: values("P106"),
-        nationality: values("P27"),
-        awards: values("P166"),
-        employer: values("P108"),
-        education: values("P69"),
-        memberOf: values("P463"),
-        influencedBy: values("P737"),
-        residence: values("P551"),
-        father: values("P22")[0] ?? null,
-        mother: values("P25")[0] ?? null,
-        spouse: values("P26"),
-        children: values("P40"),
-        siblings: values("P3373"),
+        birthPlace: links("P19")[0] ?? null,
+        deathPlace: links("P20")[0] ?? null,
+        occupations: links("P106"),
+        nationality: links("P27"),
+        awards: links("P166"),
+        employer: links("P108"),
+        education: links("P69"),
+        memberOf: links("P463"),
+        influencedBy: links("P737"),
+        residence: links("P551"),
+        father: links("P22")[0] ?? null,
+        mother: links("P25")[0] ?? null,
+        spouse: links("P26"),
+        children: links("P40"),
+        siblings: links("P3373"),
       };
 
     case "place":
       return {
         type: "place",
         ...common,
-        country: values("P17")[0] ?? null,
-        continent: values("P30")[0] ?? null,
-        locatedIn: values("P131")[0] ?? null,
+        country: links("P17")[0] ?? null,
+        continent: links("P30")[0] ?? null,
+        locatedIn: links("P131")[0] ?? null,
         coordinates: getCoordinate(bindings),
         population: getNumber(bindings, "P1082"),
         area: getNumber(bindings, "P2046"),
         inceptionDate: getDate(bindings, "P571"),
-        officialLanguage: values("P37"),
-        currency: values("P38"),
-        contains: values("P150"),
-        sharesBorderWith: values("P47"),
-        neighboringBodyOfWater: values("P206"),
+        officialLanguage: links("P37"),
+        currency: links("P38"),
+        contains: links("P150"),
+        sharesBorderWith: links("P47"),
+        neighboringBodyOfWater: links("P206"),
       };
 
     case "organization":
@@ -488,16 +524,16 @@ export async function getWikidataEntity(
         ...common,
         inceptionDate: getDate(bindings, "P571"),
         dissolutionDate: getDate(bindings, "P576"),
-        headquarters: values("P159")[0] ?? null,
-        country: values("P17")[0] ?? null,
+        headquarters: links("P159")[0] ?? null,
+        country: links("P17")[0] ?? null,
         officialWebsite: values("P856")[0] ?? null,
-        founder: values("P112"),
+        founder: links("P112"),
         employees: getNumber(bindings, "P1128"),
-        leader: values("P488"),
-        memberOf: values("P463"),
-        parentOrganization: values("P749"),
-        subsidiaries: values("P355"),
-        fieldOfWork: values("P101"),
+        leader: links("P488"),
+        memberOf: links("P463"),
+        parentOrganization: links("P749"),
+        subsidiaries: links("P355"),
+        fieldOfWork: links("P101"),
       };
 
     case "event":
@@ -506,11 +542,11 @@ export async function getWikidataEntity(
         ...common,
         startDate: getDate(bindings, "P580"),
         endDate: getDate(bindings, "P582"),
-        location: values("P276")[0] ?? null,
-        participant: values("P710"),
-        organizer: values("P664"),
-        country: values("P17")[0] ?? null,
-        significantEvent: values("P793"),
+        location: links("P276")[0] ?? null,
+        participant: links("P710"),
+        organizer: links("P664"),
+        country: links("P17")[0] ?? null,
+        significantEvent: links("P793"),
       };
 
     case "concept":
@@ -521,63 +557,79 @@ export async function getWikidataEntity(
         conceptType: conceptType ?? null,
 
         inceptionDate: getDate(bindings, "P571"),
-        formula: values("P2534")[0] ?? null,
+        formula: getValue(
+          bindings.find(
+            (binding) => getValue(binding, "propertyName") === "P2534",
+          ) ?? {},
+          "value",
+        ),
 
-        facetOf: values("P1269"),
+        facetOf: links("P1269"),
 
-        fieldOfWork: values("P101"),
-        studiedBy: values("P2578"),
-        mainSubject: values("P921"),
+        fieldOfWork: links("P101"),
+        studiedBy: links("P2578"),
+        mainSubject: links("P921"),
 
-        partOf: values("P361"),
-        hasPart: values("P527"),
-        basedOn: values("P144"),
+        partOf: links("P361"),
+        hasPart: links("P527"),
+        basedOn: links("P144"),
 
-        cause: values("P828"),
-        effect: values("P1542"),
+        cause: links("P828"),
+        effect: links("P1542"),
 
-        oppositeOf: values("P461"),
-        differentFrom: values("P1889"),
-        saidToBeTheSameAs: values("P460"),
+        oppositeOf: links("P461"),
+        differentFrom: links("P1889"),
+        saidToBeTheSameAs: links("P460"),
 
-        follows: values("P155"),
-        followedBy: values("P156"),
-        replaces: values("P1365"),
-        replacedBy: values("P1366"),
+        follows: links("P155"),
+        followedBy: links("P156"),
+        replaces: links("P1365"),
+        replacedBy: links("P1366"),
 
-        discovererOrInventor: values("P61"),
-        describedBySource: values("P1343"),
+        discovererOrInventor: links("P61"),
+        describedBySource: links("P1343"),
 
-        hasQuality: values("P1552"),
+        hasQuality: links("P1552"),
 
-        commonsCategory: values("P373")[0] ?? null,
+        commonsCategory: getValue(
+          bindings.find(
+            (binding) => getValue(binding, "propertyName") === "P373",
+          ) ?? {},
+          "valueLabel",
+        ),
       };
+
     case "work":
       return {
         type: "work",
         ...common,
-        creator: values("P170"),
+        creator: links("P170"),
         publicationDate: getDate(bindings, "P577"),
-        genre: values("P136"),
-        publisher: values("P123"),
-        language: values("P407"),
-        country: values("P495")[0] ?? null,
-        series: values("P179"),
-        basedOn: values("P144"),
-        partOf: values("P361"),
+        genre: links("P136"),
+        publisher: links("P123"),
+        language: links("P407"),
+        country: links("P495")[0] ?? null,
+        series: links("P179"),
+        basedOn: links("P144"),
+        partOf: links("P361"),
       };
 
     case "species":
       return {
         type: "species",
         ...common,
-        scientificName: values("P225")[0] ?? null,
-        commonNames: values("P1843"),
-        taxonRank: values("P105")[0] ?? null,
-        parentTaxon: values("P171")[0] ?? null,
-        conservationStatus: values("P141")[0] ?? null,
-        endemicTo: values("P183"),
-        taxonAuthor: values("P405")[0] ?? null,
+        scientificName: getValue(
+          bindings.find(
+            (binding) => getValue(binding, "propertyName") === "P225",
+          ) ?? {},
+          "value",
+        ),
+        commonNames: links("P1843"),
+        taxonRank: links("P105")[0] ?? null,
+        parentTaxon: links("P171")[0] ?? null,
+        conservationStatus: links("P141")[0] ?? null,
+        endemicTo: links("P183"),
+        taxonAuthor: links("P405")[0] ?? null,
       };
   }
 }

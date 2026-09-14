@@ -9,3 +9,8 @@ export type CommonsImage = {
 export type CommonsSearchResult = {
   images: CommonsImage[];
 };
+export type WikidataLink = {
+  id: string;
+  label: string;
+  wikipediaUrl: string | null;
+};

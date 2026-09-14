@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { WikidataLink } from "../../../../types/wikidata";
 
 export function InfoLabel({ label }: { label: string }) {
   return <div className="font-semibold text-gray-600">{label}</div>;
@@ -6,6 +7,35 @@ export function InfoLabel({ label }: { label: string }) {
 
 export function InfoValue({ value }: { value: string | null }) {
   return <div>{value}</div>;
+}
+
+export function InfoUrlRow({
+  label,
+  url,
+}: {
+  label: string;
+  url: string | null;
+}) {
+  if (!url) {
+    return null;
+  }
+
+  return (
+    <>
+      <InfoLabel label={label} />
+
+      <div>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-700 hover:underline"
+        >
+          {label}
+        </a>
+      </div>
+    </>
+  );
 }
 
 export function InfoRow({
@@ -93,6 +123,83 @@ export function InfoListRow({
 
       <div>
         <InfoList values={displayedValues} />
+
+        {shouldCollapse && (
+          <ExpandCollapse
+            expanded={expanded}
+            onToggle={() => setExpanded((current) => !current)}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+export function InfoLink({ link }: { link: WikidataLink }) {
+  const href = link.wikipediaUrl ?? `https://www.wikidata.org/wiki/${link.id}`;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-700 hover:underline capitalize"
+    >
+      {link.label}
+    </a>
+  );
+}
+
+export function InfoLinkRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: WikidataLink | null;
+}) {
+  if (!value) {
+    return null;
+  }
+
+  return (
+    <>
+      <InfoLabel label={label} />
+
+      <div>
+        <InfoLink link={value} />
+      </div>
+    </>
+  );
+}
+
+export function InfoLinkListRow({
+  label,
+  values,
+}: {
+  label: string;
+  values: WikidataLink[];
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  if (values.length === 0) {
+    return null;
+  }
+
+  const shouldCollapse = values.length > 3;
+
+  const displayedValues =
+    shouldCollapse && !expanded ? values.slice(0, 3) : values;
+
+  return (
+    <>
+      <InfoLabel label={label} />
+
+      <div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {displayedValues.map((link) => (
+            <InfoLink key={link.id} link={link} />
+          ))}
+        </div>
 
         {shouldCollapse && (
           <ExpandCollapse

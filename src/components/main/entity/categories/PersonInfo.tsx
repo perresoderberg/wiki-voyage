@@ -1,5 +1,9 @@
 import type { WikidataPerson } from "../../../../types/wikidata";
-import { InfoListRow, InfoRow } from "../content/InfoComponents";
+import {
+  InfoLinkListRow,
+  InfoLinkRow,
+  InfoRow,
+} from "../content/InfoComponents";
 
 function calculateAge(
   birthDate: string,
@@ -45,21 +49,25 @@ export function PersonInfo({ person }: { person: WikidataPerson }) {
     <div className="min-w-0 grid grid-cols-[180px_minmax(0,1fr)] gap-x-4 gap-y-3">
       <InfoRow label="Birth date" value={birthDate} />
       <InfoRow label="Death date" value={deathDate} />
-      <InfoRow label="Place of birth" value={person.birthPlace} />
-      <InfoRow label="Place of death" value={person.deathPlace} />
-      <InfoListRow label="Nationality" values={person.nationality} />
-      <InfoListRow label="Occupations" values={person.occupations} />
-      <InfoListRow label="Employers" values={person.employer} />
-      <InfoListRow label="Education" values={person.education} />
-      <InfoListRow label="Awards" values={person.awards} />
-      <InfoListRow label="Member of" values={person.memberOf} />
-      <InfoListRow label="Influenced by" values={person.influencedBy} />
-      <InfoListRow label="Residence" values={person.residence} />
-      <InfoRow label="Father" value={person.father} />
-      <InfoRow label="Mother" value={person.mother} />
-      <InfoListRow label="Spouse" values={person.spouse} />
-      <InfoListRow label="Children" values={person.children} />
-      <InfoListRow label="Siblings" values={person.siblings} />
+
+      <InfoLinkRow label="Place of birth" value={person.birthPlace} />
+      <InfoLinkRow label="Place of death" value={person.deathPlace} />
+
+      <InfoLinkListRow label="Nationality" values={person.nationality} />
+      <InfoLinkListRow label="Occupations" values={person.occupations} />
+      <InfoLinkListRow label="Employers" values={person.employer} />
+      <InfoLinkListRow label="Education" values={person.education} />
+      <InfoLinkListRow label="Awards" values={person.awards} />
+      <InfoLinkListRow label="Member of" values={person.memberOf} />
+      <InfoLinkListRow label="Influenced by" values={person.influencedBy} />
+      <InfoLinkListRow label="Residence" values={person.residence} />
+
+      <InfoLinkRow label="Father" value={person.father} />
+      <InfoLinkRow label="Mother" value={person.mother} />
+
+      <InfoLinkListRow label="Spouse" values={person.spouse} />
+      <InfoLinkListRow label="Children" values={person.children} />
+      <InfoLinkListRow label="Siblings" values={person.siblings} />
     </div>
   );
 }

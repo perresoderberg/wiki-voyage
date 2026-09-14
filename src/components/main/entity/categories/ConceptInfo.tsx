@@ -1,5 +1,5 @@
 import type { WikidataConcept } from "../../../../types/wikidata";
-import { InfoListRow, InfoRow } from "../content/InfoComponents";
+import { InfoLinkListRow, InfoRow } from "../content/InfoComponents";
 
 export function ConceptInfo({ concept }: { concept: WikidataConcept }) {
   return (
@@ -8,11 +8,11 @@ export function ConceptInfo({ concept }: { concept: WikidataConcept }) {
 
       <InfoRow label="Concept type" value={concept.conceptType} />
 
-      <InfoListRow label="Instance of" values={concept.instanceOf} />
+      <InfoLinkListRow label="Instance of" values={concept.instanceOf} />
 
-      <InfoListRow label="Subclass of" values={concept.subclassOf} />
+      <InfoLinkListRow label="Subclass of" values={concept.subclassOf} />
 
-      <InfoListRow label="Facet of" values={concept.facetOf} />
+      <InfoLinkListRow label="Facet of" values={concept.facetOf} />
 
       {/* Basic information */}
 
@@ -22,62 +22,62 @@ export function ConceptInfo({ concept }: { concept: WikidataConcept }) {
 
       {/* Subjects / disciplines */}
 
-      <InfoListRow label="Field of work" values={concept.fieldOfWork} />
+      <InfoLinkListRow label="Field of work" values={concept.fieldOfWork} />
 
-      <InfoListRow label="Studied by" values={concept.studiedBy} />
+      <InfoLinkListRow label="Studied by" values={concept.studiedBy} />
 
-      <InfoListRow label="Main subject" values={concept.mainSubject} />
+      <InfoLinkListRow label="Main subject" values={concept.mainSubject} />
 
       {/* Structure */}
 
-      <InfoListRow label="Part of" values={concept.partOf} />
+      <InfoLinkListRow label="Part of" values={concept.partOf} />
 
-      <InfoListRow label="Has part" values={concept.hasPart} />
+      <InfoLinkListRow label="Has part" values={concept.hasPart} />
 
-      <InfoListRow label="Based on" values={concept.basedOn} />
+      <InfoLinkListRow label="Based on" values={concept.basedOn} />
 
       {/* Causality */}
 
-      <InfoListRow label="Cause" values={concept.cause} />
+      <InfoLinkListRow label="Cause" values={concept.cause} />
 
-      <InfoListRow label="Effect" values={concept.effect} />
+      <InfoLinkListRow label="Effect" values={concept.effect} />
 
       {/* Comparison */}
 
-      <InfoListRow label="Opposite of" values={concept.oppositeOf} />
+      <InfoLinkListRow label="Opposite of" values={concept.oppositeOf} />
 
-      <InfoListRow label="Different from" values={concept.differentFrom} />
+      <InfoLinkListRow label="Different from" values={concept.differentFrom} />
 
-      <InfoListRow
+      <InfoLinkListRow
         label="Said to be the same as"
         values={concept.saidToBeTheSameAs}
       />
 
       {/* Historical relationships */}
 
-      <InfoListRow label="Follows" values={concept.follows} />
+      <InfoLinkListRow label="Follows" values={concept.follows} />
 
-      <InfoListRow label="Followed by" values={concept.followedBy} />
+      <InfoLinkListRow label="Followed by" values={concept.followedBy} />
 
-      <InfoListRow label="Replaces" values={concept.replaces} />
+      <InfoLinkListRow label="Replaces" values={concept.replaces} />
 
-      <InfoListRow label="Replaced by" values={concept.replacedBy} />
+      <InfoLinkListRow label="Replaced by" values={concept.replacedBy} />
 
       {/* People / sources */}
 
-      <InfoListRow
+      <InfoLinkListRow
         label="Discoverer or inventor"
         values={concept.discovererOrInventor}
       />
 
-      <InfoListRow
+      <InfoLinkListRow
         label="Described by source"
         values={concept.describedBySource}
       />
 
       {/* Other */}
 
-      <InfoListRow label="Has quality" values={concept.hasQuality} />
+      <InfoLinkListRow label="Has quality" values={concept.hasQuality} />
 
       <InfoRow label="Commons category" value={concept.commonsCategory} />
     </div>

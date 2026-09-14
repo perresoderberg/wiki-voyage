@@ -9,22 +9,6 @@ import type {
 import { getWikidataStatements } from "../../../../services/wikidata-api";
 import { ExpandCollapse } from "./InfoComponents";
 
-function getGridColumns(count: number): string {
-  if (count >= 8) {
-    return "grid-cols-4";
-  }
-
-  if (count >= 5) {
-    return "grid-cols-3";
-  }
-
-  if (count >= 2) {
-    return "grid-cols-2";
-  }
-
-  return "grid-cols-1";
-}
-
 function WikidataPropertyGroup({
   statements,
   renderValue,
@@ -45,15 +29,15 @@ function WikidataPropertyGroup({
   const displayedStatements =
     shouldCollapse && !expanded ? statements.slice(0, 3) : statements;
 
+  const styling = statements.length > 3 ? "grid grid-cols-3" : "flex gap-4";
+
   return (
     <section>
       <h4 className="mb-3 text-lg font-bold capitalize">
         {first.propertyLabel}
       </h4>
 
-      <div
-        className={`grid ${getGridColumns(statements.length)} gap-x-8 gap-y-2`}
-      >
+      <div className={styling}>
         {displayedStatements.map((statement, index) => (
           <div key={`${statement.propertyId}-${statement.value}-${index}`}>
             {renderValue(statement)}
