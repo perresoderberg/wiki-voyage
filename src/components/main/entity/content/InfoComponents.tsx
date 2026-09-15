@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { WikidataLink } from "../../../../types/wikidata";
 
 export function InfoLabel({ label }: { label: string }) {
-  return <div className="font-semibold text-gray-600">{label}</div>;
+  return <div className="font-semibold text-text-muted">{label}</div>;
 }
 
 export function InfoValue({ value }: { value: string | null }) {
@@ -29,7 +29,7 @@ export function InfoUrlRow({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-700 hover:underline"
+          className="text-link hover:text-link-hover hover:underline"
         >
           {label}
         </a>
@@ -92,7 +92,7 @@ export function ExpandCollapse({
           onToggle();
         }
       }}
-      className="mt-2 cursor-pointer rounded-md bg-sky-50 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-sky-100"
+      className="mt-2 cursor-pointer rounded-md bg-hover-accent px-3 py-2 text-sm text-text transition-colors hover:bg-hover"
     >
       {expanded ? "Click to collapse" : "Click to expand"}
     </div>
@@ -143,7 +143,7 @@ export function InfoLink({ link }: { link: WikidataLink }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-blue-700 hover:underline capitalize"
+      className="text-link hover:text-link-hover hover:underline capitalize"
     >
       {link.label}
     </a>

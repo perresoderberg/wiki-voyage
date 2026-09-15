@@ -50,14 +50,15 @@ export default function MenuItem({
     rounded-md
     px-3
     py-2
+    whitespace-nowrap
     text-left
     text-sm
     font-normal
-    text-gray-600
+    text-text-muted
     transition-colors
     duration-150
-    hover:bg-gray-100
-    hover:text-gray-900
+    hover:bg-hover
+    hover:text-text
   `;
 
   const submenuStyle = `
@@ -66,8 +67,8 @@ export default function MenuItem({
     min-w-60
     rounded-lg
     border
-    border-gray-200
-    bg-white
+    border-border
+    bg-background
     p-1
     shadow-lg
   `;

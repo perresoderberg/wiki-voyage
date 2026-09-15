@@ -40,28 +40,28 @@ export function ImageGallery({
     <div className="flex items-stretch gap-2">
       {/* Left hover area */}
       <div
-        className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-gray-100 hover:bg-sky-100"
+        className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-hover hover:bg-hover-accent"
         onMouseEnter={() => startScrolling("left")}
         onMouseLeave={stopScrolling}
       >
-        <span className="text-2xl">‹</span>
+        <span className="text-2xl text-text-muted">‹</span>
       </div>
 
       {/* Image row */}
       <div
         ref={galleryRef}
-        className="flex min-w-0 gap-4 overflow-x-auto items-center bg-gray-100"
+        className="flex min-w-0 items-center gap-4 overflow-x-auto bg-surface"
       >
         {images.images.map((image) => (
           <article
             key={image.title}
-            className="w-64 shrink-0 overflow-hidden rounded-lg border border-gray-200 bg-white transition-transform hover:scale-110"
+            className="w-64 shrink-0 overflow-hidden rounded-lg border border-border bg-background transition-transform hover:scale-110"
           >
             <a
               href={image.pageUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-blue-700 hover:underline"
+              className="text-sm text-link hover:text-link-hover hover:underline"
             >
               <img
                 src={image.thumbnailUrl ?? image.imageUrl}
@@ -75,11 +75,11 @@ export function ImageGallery({
 
       {/* Right hover area */}
       <div
-        className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-gray-100 hover:bg-sky-100"
+        className="flex w-12 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-hover hover:bg-hover-accent"
         onMouseEnter={() => startScrolling("right")}
         onMouseLeave={stopScrolling}
       >
-        <span className="text-2xl">›</span>
+        <span className="text-2xl text-text-muted">›</span>
       </div>
     </div>
   );

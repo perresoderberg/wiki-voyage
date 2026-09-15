@@ -18,10 +18,8 @@ export function SourceTabs({ wikipedia, wikidata, commons }: SourceTabsProps) {
     "wikipedia" | "wikidata" | "images"
   >("wikipedia");
 
-  console.log("wikipedia:", wikipedia);
-  console.log("wikidata:", wikidata);
-
-  const selectedStyle = "font-bold border bg-black text-gray-400 rounded";
+  const selectedStyle =
+    "p-1 font-bold text-text border-t rounded-t-xl bg-gradient-to-b from-entity-header to-header";
   return (
     <section>
       <div className="flex gap-2 border-b">

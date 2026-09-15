@@ -14,8 +14,9 @@ function App() {
     : null;
 
   return (
-    <div className="w-full flex flex-col gap 2">
+    <div className="flex w-full flex-col">
       <Header menuItems={menuItems} setSelectedItem={setSelectedItem} />
+
       <NavigationPath navigationPath={navigationPath} />
 
       <main className="mx-auto w-full max-w-7xl flex-1">

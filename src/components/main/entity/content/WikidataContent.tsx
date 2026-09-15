@@ -99,7 +99,7 @@ export function WikidataContent({ entity }: { entity: WikidataEntity }) {
           href={statement.wikipediaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-700 hover:underline capitalize"
+          className="text-link hover:text-link-hover hover:underline capitalize"
         >
           {statement.valueLabel}
         </a>
@@ -115,7 +115,7 @@ export function WikidataContent({ entity }: { entity: WikidataEntity }) {
           href={statement.value}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-700 hover:underline capitalize"
+          className="text-link hover:text-link-hover hover:underline capitalize"
         >
           {statement.propertyLabel}
         </a>

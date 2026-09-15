@@ -12,7 +12,7 @@ export function WikipediaContent({
       <div className="font-bold">{article?.description}</div>
       <div className="my-2">{article?.extract}</div>
       <a
-        className="block w-full rounded bg-gray-200 px-4 py-2 text-center hover:bg-gray-300"
+        className="block w-full rounded bg-hover px-4 py-2 text-center text-text hover:bg-border"
         href={wikipediaUrl}
         target="_blank"
         rel="noopener noreferrer"

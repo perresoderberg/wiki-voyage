@@ -52,13 +52,16 @@ export function EntityPage({ item }: { item: MenuItem }) {
         <div className="p-4">Loading...</div>
       ) : (
         <>
-          <h2 className="bg-black text-center text-2xl font-extrabold text-white">
+          <h1 className="border-b  text-center text-2xl font-extrabold text-text rounded-t-3xl bg-gradient-to-b from-entity-header to-header">
             {wikipediaSummary.title}
-          </h2>
+          </h1>
 
           <section className="flex items-start gap-4">
             {wikipediaSummary.imageUrl && (
-              <EntityImage imageUrl={wikipediaSummary.imageUrl} />
+              <EntityImage
+                entity={wikipediaSummary.title}
+                imageUrl={wikipediaSummary.imageUrl}
+              />
             )}
 
             <EntityInfo entity={wikidataEntry} />
