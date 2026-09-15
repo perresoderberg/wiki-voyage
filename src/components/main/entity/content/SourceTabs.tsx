@@ -21,7 +21,7 @@ export function SourceTabs({ wikipedia, wikidata, commons }: SourceTabsProps) {
   const selectedStyle =
     "p-1 font-bold text-text border-t rounded-t-xl bg-gradient-to-b from-entity-header to-header";
   return (
-    <section>
+    <section className="mt-2">
       <div className="flex gap-2 border-b">
         <button
           type="button"
