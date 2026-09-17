@@ -1,1191 +1,444 @@
 # Wiki Voyage
 
-**Wiki Voyage** is a React + TypeScript web application for exploring
-people, places, organizations, events, concepts, works, and species
-through data from **Wikipedia, Wikidata, and Wikimedia Commons**.
+Wiki Voyage is a React and TypeScript web application for exploring knowledge through **Wikipedia, Wikidata, and Wikimedia Commons**.
 
-The application presents information from these Wikimedia projects in a
-single interface, with a category-aware entity view, expandable Wikidata
-properties, linked related entities, an image gallery, hierarchical
-navigation, and a selectable visual theme.
+The application presents different kinds of entities—such as people, places, organizations, events, concepts, works, and species—through a common interface while allowing each entity type to display information relevant to it.
 
----
+## Problem and Target Audience
+
+Wikipedia is excellent for reading articles, while Wikidata provides structured information and relationships between entities. However, the structured nature of Wikidata can make it less intuitive to explore directly.
+
+Wiki Voyage combines these sources into a simple browsing experience:
+
+- **Wikipedia** provides readable article summaries.
+- **Wikidata** provides structured facts and relationships.
+- **Wikimedia Commons** provides images and media.
+- A hierarchical navigation menu makes it possible to explore predefined topics and entities.
+
+The project is primarily aimed at:
+
+- People who want to explore knowledge interactively.
+- Developers interested in consuming public knowledge APIs.
+- Students learning React, TypeScript, APIs, and component-based frontend architecture.
+- Recruiters and developers who want to see an example of a modern React application.
 
 ## Features
 
-### Explore knowledge through a hierarchical menu
+### Entity exploration
 
-Wiki Voyage starts with a structured exploration menu containing categories such as:
+Entities are organized into categories such as:
 
-- Physics
-- Biology
-- Chemistry
-- Psychology
-- Linguistics
-- Science Communication
-- History
-- Geography
+- People
+- Places
 - Organizations
+- Events
+- Concepts
 - Works
+- Species
 
-Menu entries can contain multiple levels of submenus. Leaf entries
-represent actual entities and contain metadata such as:
+The application uses a shared entity page while providing specialized information components for each entity type.
 
-- Entity name
-- Entity type
-- Wikidata ID
-- Wikipedia URL
-- Optional concept type
+### Multiple data sources
 
-The menu structure is stored in JSON rather than being hard-coded into React components.
+Each entity can combine information from three Wikimedia projects:
 
-### Entity information
+- **Wikipedia** – article summaries and readable content.
+- **Wikidata** – structured information and relationships.
+- **Wikimedia Commons** – image galleries.
 
-Entities are classified into seven application-level types:
+### Wikidata and SPARQL
 
----
+Wikidata is queried using **SPARQL**.
 
-Entity type Example information
+The application retrieves structured properties such as:
 
----
-
-Person Birth/death, nationality, occupation, education, family
-
-Place Country, continent, population, area, coordinates
-
-Organization Headquarters, founder, leaders, employees, website
-
-Event Dates, location, participants, organizers
-
-Concept Classification, disciplines, causes, effects, relationships
-
-Work Creator, publication date, genre, publisher, language
-
-Species Scientific name, taxonomy, conservation status
-
----
-
-The application uses TypeScript discriminated unions so that each entity
-type can have its own strongly typed data model and UI.
-
-### Wikipedia
-
-The Wikipedia tab displays:
-
-- Article title
-- Description
-- Introductory extract
-- Link to the complete English Wikipedia article
-
-Wikipedia data is retrieved through the Wikipedia REST API.
-
-### Wikidata
-
-The Wikidata integration has two layers.
-
-#### Typed entity information
-
-The main entity section maps selected Wikidata properties into an
-entity-specific TypeScript model.
-
-For example, a person can contain:
-
-- Birth date
-- Death date
-- Place of birth
-- Place of death
-- Nationality
+- Instance of
+- Subclass of
+- Birth and death information
 - Occupations
-- Employers
-- Education
-- Awards
-- Memberships
-- Influences
-- Residence
-- Parents
-- Spouse
-- Children
-- Siblings
+- Nationality
+- Locations
+- Organizations
+- Dates
+- Relationships between entities
 
-Related Wikidata entities are represented by a `WikidataLink` containing:
+Item-valued Wikidata properties are represented as typed links. Where an English Wikipedia article exists, the value can link directly to that article.
 
-```ts
-type WikidataLink = {
-  id: string;
-  label: string;
-  wikipediaUrl: string | null;
-};
-```
+### Responsive UI
 
-The UI displays the human-readable label rather than exposing Wikidata
-Q-IDs as the primary user-facing text.
+The interface uses responsive layouts and reusable components to adapt the presentation to different screen sizes.
 
-#### Generic Wikidata properties
+### Expandable information
 
-The Wikidata tab also retrieves additional statements dynamically.
+Properties with many values can be collapsed and expanded so that large amounts of Wikidata information do not overwhelm the page.
 
-Each statement contains:
+### Image gallery
 
-- Property ID
-- Property label
-- Value
-- Optional value label
-- Optional English Wikipedia article
-- Value type (`item` or `literal`)
+Images from Wikimedia Commons are presented in a horizontally scrollable gallery.
 
-Statements are grouped by property and displayed together.
+### Theme system
 
-Properties with many values can be expanded and collapsed so that large
-Wikidata records remain readable.
+The application includes a theme selector with multiple visual themes.
 
-Some technical Wikidata properties are deliberately excluded from the
-generic presentation, including:
+Themes are implemented using:
 
-- External IDs
-- Commons media properties
-- URL properties
-- Permanent duplicate relationships
-- Internal `.well-known/genid` values
+- React Context
+- CSS custom properties
+- Tailwind CSS
 
-### Wikimedia Commons image gallery
-
-The Images tab retrieves images from Wikimedia Commons.
-
-The gallery:
-
-- Displays images horizontally
-- Uses thumbnails where available
-- Links each image to its Wikimedia Commons page
-- Supports horizontal scrolling
-- Provides left/right hover controls
-- Continuously scrolls while the pointer remains over a control
-- Displays multiple images per entity
-
-The current entity page requests up to 30 Commons results.
-
-### Multiple visual themes
-
-Wiki Voyage uses CSS custom properties together with Tailwind CSS to
-implement themes.
-
-The project currently defines themes including:
-
-- Default
-- Forest
-- Ocean
-- Sunset
-- Lavender
-- Library
-- Desert
-- Matrix
-- Space
-- Synthwave
-- Monochrome
-- Royal
-- Cyberpunk
-
-Theme values are exposed to Tailwind through the `@theme` block in `index.css`.
-
-The selected theme is applied to the document root through `data-theme` and persisted in `localStorage`.
+The selected theme is also stored in `localStorage`.
 
 ### Navigation path
 
-When an entity is selected, Wiki Voyage calculates its location in the
-menu hierarchy and displays a navigation path such as:
+A navigation path shows where the selected entity is located in the application's topic hierarchy.
+
+## Demo
+
+**Live application:**
+
+https://jolly-desert-0090d2903.6.azurestaticapps.net/
+
+The application is deployed as an Azure Static Web App.
+
+## Screenshots
+
+The application is primarily intended to be experienced through the live deployment above.
+
+## Technology Choices
+
+### React
+
+React is used to build the user interface from reusable components.
+
+The application separates concerns into components such as Header, Navigation, Entity Page, Entity Information, Source Tabs, Image Gallery, Footer, and Theme Selector.
+
+### TypeScript
+
+TypeScript is used for static typing throughout the application.
+
+The project defines explicit models for Wikidata entities, Wikidata links and statements, Wikipedia data, Wikimedia Commons images, and menu items. This makes data returned by external APIs easier to work with safely inside React components.
+
+### Vite
+
+Vite is used as the development server and build tool. The production build is generated in the `dist` directory.
+
+### Tailwind CSS
+
+Tailwind CSS is used for most UI styling. CSS custom properties provide theme-specific values for backgrounds, surfaces, text, borders, links, hover states, and active states.
+
+### SPARQL and Wikidata Query Service
+
+SPARQL is used to query the Wikidata knowledge graph. Instead of treating Wikidata like a traditional relational database, the application queries relationships between entities and properties.
+
+### Public APIs
+
+The application communicates directly with public Wikimedia APIs:
+
+- Wikipedia API
+- Wikidata Query Service
+- Wikimedia Commons API
+
+No application backend is required for the current version.
+
+### ESLint
+
+ESLint is configured for TypeScript and React, including React Hooks and React Refresh rules. TypeScript is also configured with checks such as `noUnusedLocals`, `noUnusedParameters`, and `noFallthroughCasesInSwitch`.
+
+## Architecture
+
+The application follows a component-based architecture.
 
 ```text
-Explore → Physics → Physicists → Albert Einstein
-```
-
-This is calculated recursively from the menu tree.
-
-### Menu interaction
-
-The hierarchical menu supports:
-
-- Hovering over categories to open submenus
-- Clicking categories to open/close them
-- Clicking leaf entries to select an entity
-- Closing menus by clicking outside
-- Closing menus with `Escape`
-
-Menu items use recursive rendering, allowing the same component to
-handle arbitrary submenu depth.
-
----
-
-# Architecture
-
-The application is deliberately divided into four main concerns:
-
-```text
-                    ┌─────────────────┐
-                    │      App        │
-                    └────────┬────────┘
-                             │
-             ┌───────────────┼────────────────┐
-             │               │                │
-             ▼               ▼                ▼
-          Header       NavigationPath       Footer
-             │
-             ▼
-           Menu
-             │
-             ▼
-        MenuItem
-             │
-             │ entity selected
-             ▼
-        EntityPage
-             │
-       ┌─────┼─────────────┐
-       │     │             │
-       ▼     ▼             ▼
-    Entity  Entity      SourceTabs
-    Image   Info            │
-            │        ┌──────┼───────┐
-            │        ▼      ▼       ▼
-            │    Wikipedia Wikidata Images
-            │
-            └── category-specific info
-                ├── PersonInfo
-                ├── PlaceInfo
-                ├── OrganizationInfo
-                ├── EventInfo
-                ├── ConceptInfo
-                ├── WorkInfo
-                └── SpeciesInfo
-```
-
-The application follows a simple React component hierarchy rather than
-introducing a global state-management library.
-
----
-
-# Project structure
-
-```text
-.
-├── README.md
-├── dist/
-│   └── ...                         # Production build output
-├── eslint.config.js
-├── index.html
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── tsconfig.app.json
-├── tsconfig.node.json
-├── vite.config.ts
-│
-└── src/
-    ├── App.tsx
-    ├── index.css
-    ├── main.tsx
-    │
-    ├── assets/
-    │   ├── logo.png
-    │   ├── react.svg
-    │   └── vite.svg
-    │
-    ├── components/
-    │   ├── Footer.tsx
-    │   ├── ThemeSelector.tsx
-    │   │
-    │   ├── header/
-    │   │   ├── Header.tsx
-    │   │   ├── Logo.tsx
-    │   │   ├── Menu.tsx
-    │   │   └── MenuItem.tsx
-    │   │
-    │   └── main/
-    │       ├── NavigationPath.tsx
-    │       │
-    │       └── entity/
-    │           ├── EntityPage.tsx
-    │           │
-    │           ├── categories/
-    │           │   ├── ConceptInfo.tsx
-    │           │   ├── EventInfo.tsx
-    │           │   ├── OrganizationInfo.tsx
-    │           │   ├── PersonInfo.tsx
-    │           │   ├── PlaceInfo.tsx
-    │           │   ├── SpeciesInfo.tsx
-    │           │   └── WorkInfo.tsx
-    │           │
-    │           ├── content/
-    │           │   ├── ImageGallery.tsx
-    │           │   ├── InfoComponents.tsx
-    │           │   ├── SourceTabs.tsx
-    │           │   ├── WikidataContent.tsx
-    │           │   └── WikipediaContent.tsx
-    │           │
-    │           └── header/
-    │               ├── EntityImage.tsx
-    │               └── EntityInfo.tsx
-    │
-    ├── context/
-    │   └── ThemeContext.tsx
-    │
-    ├── data/
-    │   └── menu.json
-    │
-    ├── services/
-    │   ├── commons-api.ts
-    │   ├── wikidata-api.ts
-    │   └── wikipedia-api.ts
-    │
-    ├── types/
-    │   ├── commons.ts
-    │   ├── menu.ts
-    │   ├── wikidata.ts
-    │   └── wikipedia.ts
-    │
-    └── utils/
-        └── menu.ts
-```
-
----
-
-# Data flow
-
-Selecting an entity starts the main data-loading flow.
-
-```text
-menu.json
-    │
-    ▼
-Menu
-    │
-    │ user clicks entity
-    ▼
 App
-    │
-    ▼
-EntityPage
-    │
-    ├──────────────► Wikipedia REST API
-    │                     │
-    │                     ▼
-    │                Article summary
-    │
-    ├──────────────► Wikimedia Commons API
-    │                     │
-    │                     ▼
-    │                Image search
-    │
-    └──────────────► Wikidata SPARQL
-                          │
-                          ▼
-                    Entity properties
-                          │
-                          ▼
-                 Type-specific model
+├── Header
+│   ├── Logo
+│   ├── Menu
+│   └── ThemeSelector
+├── NavigationPath
+├── EntityPage
+│   ├── EntityImage
+│   ├── EntityInfo
+│   │   ├── PersonInfo
+│   │   ├── PlaceInfo
+│   │   ├── OrganizationInfo
+│   │   ├── EventInfo
+│   │   ├── ConceptInfo
+│   │   ├── WorkInfo
+│   │   └── SpeciesInfo
+│   └── SourceTabs
+│       ├── WikipediaContent
+│       ├── WikidataContent
+│       └── ImageGallery
+└── Footer
 ```
 
-The entity page then passes the resulting data to the presentation
-components.
-
----
-
-# External APIs
-
-## Wikipedia
-
-Wiki Voyage uses the English Wikipedia REST API to retrieve article
-summaries.
-
-The application requests:
+API communication is separated from UI components through service modules:
 
 ```text
-/page/summary/{title}
+src/
+├── components/
+├── context/
+├── data/
+├── services/
+│   ├── commons-api.ts
+│   ├── wikidata-api.ts
+│   └── wikipedia-api.ts
+├── types/
+└── utils/
 ```
 
-The returned data is mapped to the application's `WikipediaArticle`
-type:
+This keeps external API logic separate from presentation components.
 
-```ts
-type WikipediaArticle = {
-  title: string;
-  description: string | null;
-  extract: string;
-  wikipediaUrl: string;
-  wikidataId: string | null;
-  imageUrl: string | null;
-};
-```
-
----
-
-## Wikidata
-
-Wikidata is queried through its SPARQL endpoint.
-
-The application builds a query containing the properties relevant to the
-selected entity type.
-
-Common properties include:
+## Data Flow
 
 ```text
-P31  instance of
-P279 subclass of
+Menu selection
+      ↓
+   EntityPage
+      ↓
+ ┌────┴───────────────┐
+ ↓                    ↓
+Wikipedia          Wikidata
+ ↓                    ↓
+Article data       SPARQL data
+                      ↓
+                Typed entity model
+                      ↓
+                Entity information
+
+Entity
+  ↓
+Wikimedia Commons
+  ↓
+Image gallery
 ```
 
-Additional properties depend on the entity type.
+The application uses different external sources for different purposes rather than trying to retrieve all information from one API.
 
-For example:
+## Local Setup
 
-```text
-Person
-├── P569  birth date
-├── P570  death date
-├── P19   place of birth
-├── P20   place of death
-├── P106  occupation
-├── P27   country of citizenship
-├── P166  award
-├── P108  employer
-├── P69   educated at
-├── P551  residence
-├── P22   father
-├── P25   mother
-├── P26   spouse
-├── P40   child
-└── P3373 sibling
-```
-
-The API layer is responsible for transforming SPARQL bindings into
-application-specific TypeScript objects.
-
-This keeps SPARQL-specific details out of the React components.
-
----
-
-## Wikimedia Commons
-
-The Commons API is used to search for media in the file namespace.
-
-The service returns:
-
-```ts
-type CommonsImage = {
-  title: string;
-  imageUrl: string;
-  thumbnailUrl: string | null;
-  width: number | null;
-  height: number | null;
-  pageUrl: string;
-};
-```
-
-The UI consumes this application type rather than working directly with
-the raw Commons API response.
-
----
-
-# TypeScript model
-
-The project uses a discriminated union for entity data:
-
-```ts
-type WikidataEntity =
-  | WikidataPerson
-  | WikidataPlace
-  | WikidataOrganization
-  | WikidataEvent
-  | WikidataConcept
-  | WikidataWork
-  | WikidataSpecies;
-```
-
-The `type` property acts as the discriminator.
-
-That allows React components to use a normal TypeScript `switch`:
-
-```tsx
-switch (entity.type) {
-  case "person":
-    return <PersonInfo person={entity} />;
-
-  case "place":
-    return <PlaceInfo place={entity} />;
-
-  case "organization":
-    return <OrganizationInfo organization={entity} />;
-
-  // ...
-}
-```
-
-TypeScript then knows which properties are available in each branch.
-
-This is particularly useful for keeping the category-specific UI
-strongly typed.
-
----
-
-# Component responsibilities
-
-## `App.tsx`
-
-The application root.
-
-Responsibilities:
-
-- Holds the currently selected menu item
-- Calculates the navigation path
-- Renders the header, main content and footer
-- Starts the entity page when an item is selected
-
----
-
-## `Menu.tsx`
-
-Owns menu interaction state.
-
-Responsibilities:
-
-- Tracks the currently open submenu path
-- Opens menu levels
-- Closes menu levels
-- Detects clicks outside the navigation
-- Handles `Escape`
-
----
-
-## `MenuItem.tsx`
-
-A recursive menu component.
-
-A `MenuItem` renders itself and, when necessary, renders more `MenuItem`
-components for its children.
-
-This allows the menu hierarchy to be represented directly by the
-recursive structure of `menu.json`.
-
----
-
-## `EntityPage.tsx`
-
-The main entity container.
-
-It coordinates:
-
-1.  Wikipedia data
-2.  Wikimedia Commons images
-3.  Wikidata data
-
-It then composes:
-
-```text
-EntityPage
-├── EntityImage
-├── EntityInfo
-└── SourceTabs
-```
-
----
-
-## `EntityInfo.tsx`
-
-Selects the correct category-specific information component using the
-entity discriminator.
-
-```text
-WikidataEntity
-       │
-       ├── person ─────────► PersonInfo
-       ├── place ──────────► PlaceInfo
-       ├── organization ───► OrganizationInfo
-       ├── event ──────────► EventInfo
-       ├── concept ────────► ConceptInfo
-       ├── work ───────────► WorkInfo
-       └── species ────────► SpeciesInfo
-```
-
----
-
-## `InfoComponents.tsx`
-
-Contains reusable presentation components for entity metadata.
-
-Examples:
-
-- `InfoLabel`
-- `InfoValue`
-- `InfoRow`
-- `InfoList`
-- `InfoListRow`
-- `InfoLink`
-- `InfoLinkRow`
-- `InfoLinkListRow`
-- `InfoUrlRow`
-- `ExpandCollapse`
-
-This avoids duplicating the same label/value/link/expand-collapse
-patterns across all entity categories.
-
----
-
-## `SourceTabs.tsx`
-
-Provides the three source views:
-
-```text
-WIKIPEDIA
-WIKIDATA
-IMAGES
-```
-
-Each tab delegates its content to a dedicated component.
-
----
-
-# 🎨 Styling
-
-The project uses **Tailwind CSS v4**.
-
-Tailwind is integrated through the Vite plugin:
-
-```ts
-import tailwindcss from "@tailwindcss/vite";
-```
-
-and:
-
-```ts
-plugins: [react(), tailwindcss()];
-```
-
-The application also uses CSS custom properties for semantic theme
-colors.
-
-For example:
-
-```css
---theme-background
---theme-surface
---theme-header
---theme-primary
---theme-text
---theme-border
---theme-link
---theme-hover
-```
-
-These are exposed to Tailwind through:
-
-```css
-@theme {
-  --color-background: var(--theme-background);
-  --color-surface: var(--theme-surface);
-  --color-header: var(--theme-header);
-  --color-primary: var(--theme-primary);
-  --color-text: var(--theme-text);
-  --color-border: var(--theme-border);
-}
-```
-
-Components can therefore use semantic classes such as:
-
-```text
-bg-background
-bg-surface
-bg-header
-text-text
-text-text-muted
-text-link
-border-border
-bg-hover
-```
-
-instead of hard-coding individual colors into components.
-
----
-
-# Tech stack
-
-Technology Purpose
-
----
-
-React UI and component architecture
-TypeScript Static typing and domain models
-Vite Development server and build tooling
-Tailwind CSS Styling
-CSS custom properties Theme system
-Wikipedia REST API Article summaries
-Wikidata SPARQL Structured knowledge
-Wikimedia Commons API Image search
-ESLint Code quality and linting
-
-Current package versions are defined in `package.json`.
-
-The project currently uses React 19, TypeScript 6, Vite 8, Tailwind CSS
-4 and ESLint 10. fileciteturn84file0L49-L76
-
----
-
-# Getting started
-
-## Prerequisites
+### Prerequisites
 
 Install:
 
 - Node.js
 - npm
 
-Check the installed versions:
+The project does not require a separate backend or database.
+
+### Clone the repository
 
 ```bash
-node --version
-npm --version
+git clone https://github.com/perresoderberg/wiki-voyage.git
+cd wiki-voyage
 ```
 
----
-
-## Installation
-
-Clone or copy the project and install dependencies:
+### Install dependencies
 
 ```bash
 npm install
 ```
 
----
-
-## Start the development server
+### Start the development server
 
 ```bash
 npm run dev
 ```
 
-Vite will start the development server and display the local URL in the
-terminal.
+Vite will start a local development server, normally at:
 
-Open that URL in a browser.
+```text
+http://localhost:5173/
+```
 
----
-
-# Production build
-
-Create a production build:
+### Build for production
 
 ```bash
 npm run build
 ```
 
-The build performs TypeScript checking followed by the Vite production
-build:
+The production files are generated in:
 
 ```text
-tsc -b
-    ↓
-vite build
-    ↓
 dist/
 ```
 
-The generated `dist` directory contains the deployable application.
-
----
-
-# Linting
-
-Run ESLint:
-
-```bash
-npm run lint
-```
-
-The project uses:
-
-- ESLint recommended rules
-- TypeScript ESLint
-- React Hooks rules
-- React Refresh rules
-
-The `dist` directory is ignored by ESLint.
-
----
-
-# Preview the production build
-
-After building:
+### Preview the production build
 
 ```bash
 npm run preview
 ```
 
-This starts Vite's local preview server for the generated production
-build.
+### Run ESLint
 
----
-
-# Adding a new entity
-
-A typical new entity requires changes in several places.
-
-## 1. Add the entity to `menu.json`
-
-Provide at least:
-
-```json
-{
-  "title": "Example",
-  "id": "example",
-  "entityType": "person",
-  "wikidataId": "Q123"
-}
+```bash
+npm run lint
 ```
 
-For concepts, an optional `conceptType` can also be supplied.
-
----
-
-## 2. Add the entity type if necessary
-
-Entity types are defined in:
+## Project Structure
 
 ```text
-src/types/wikidata.ts
+src/
+├── App.tsx
+├── main.tsx
+├── index.css
+├── assets/
+│   └── logo.png
+├── components/
+│   ├── Footer.tsx
+│   ├── ThemeSelector.tsx
+│   ├── header/
+│   │   ├── Header.tsx
+│   │   ├── Logo.tsx
+│   │   ├── Menu.tsx
+│   │   └── MenuItem.tsx
+│   └── main/
+│       ├── NavigationPath.tsx
+│       └── entity/
+│           ├── EntityPage.tsx
+│           ├── categories/
+│           ├── content/
+│           └── header/
+├── context/
+│   └── ThemeContext.tsx
+├── data/
+│   └── menu.json
+├── services/
+│   ├── commons-api.ts
+│   ├── wikidata-api.ts
+│   └── wikipedia-api.ts
+├── types/
+│   ├── commons.ts
+│   ├── menu.ts
+│   ├── wikidata.ts
+│   └── wikipedia.ts
+└── utils/
+    └── menu.ts
 ```
 
-Currently:
+## Known Limitations
 
-```text
-person
-place
-organization
-concept
-event
-work
-species
-```
+### Dependence on external APIs
 
----
+The application depends on public Wikimedia services. If an API is unavailable, slow, rate-limited, or returns unexpected data, some parts of an entity page may fail to load.
 
-## 3. Add Wikidata properties
+### Wikidata data is inconsistent
 
-The Wikidata service maintains a property configuration for each entity
-type.
+Wikidata is community-maintained and not every entity contains the same properties or level of detail. Some fields may therefore be missing, while other entities may have many values for the same property.
 
-For example:
+### SPARQL query complexity
 
-```ts
-{
-  id: "P569",
-  name: "birthDate"
-}
-```
+Wikidata queries can become expensive when retrieving many relationships at once. Complex queries may take longer to execute or can occasionally fail at the Wikidata Query Service.
 
-The service uses these definitions when constructing the SPARQL query.
+### Predefined navigation
 
----
+The current application uses a predefined menu structure in `menu.json`. It is not currently a general-purpose Wikipedia search engine.
 
-## 4. Add or update the TypeScript model
+### No application backend
 
-Entity-specific fields belong in the corresponding type:
+API calls are made from the browser. There is currently no custom backend for caching, authentication, API aggregation, request throttling, or persistent application data.
 
-```text
-WikidataPerson
-WikidataPlace
-WikidataOrganization
-WikidataEvent
-WikidataConcept
-WikidataWork
-WikidataSpecies
-```
+### English Wikipedia links
 
----
+The application uses English Wikipedia links when an English article exists for a linked Wikidata entity. Other language editions are not currently selected dynamically.
 
-## 5. Add the UI
+### Theme configuration
 
-Create or modify the corresponding component in:
+Themes are currently defined in CSS and the available theme options are selected in the React UI. The theme configuration could be centralized further to reduce duplication.
 
-```text
-src/components/main/entity/categories/
-```
+## Possible Next Steps
 
-For example:
+### Search
 
-```text
-PersonInfo.tsx
-```
+Add a search field allowing users to search for arbitrary Wikipedia/Wikidata entities instead of relying only on the predefined menu.
 
----
+### Better API error handling
 
-# Design principles
+Improve loading and error states for each individual data source so that one failed API does not affect the presentation of the other sources.
 
-The project intentionally keeps responsibilities separated.
+### Caching
 
-### Components should present data
+Add client-side caching to avoid repeatedly requesting the same Wikidata, Wikipedia, or Commons data.
 
-React components should primarily decide:
+### More languages
 
-- What to render
-- How to render it
-- How the user interacts with it
+Allow users to choose the Wikipedia/Wikidata language used for labels and article links.
 
-They should not contain large amounts of API parsing logic.
+### More entity types
 
-### Services should handle external APIs
+Extend the common entity architecture with additional categories and more specialized Wikidata properties.
 
-The service layer contains:
+### URL-based navigation
 
-```text
-commons-api.ts
-wikidata-api.ts
-wikipedia-api.ts
-```
+Store the selected entity in the URL so that pages can be bookmarked and shared directly.
 
-These modules are responsible for:
+### Improved accessibility
 
-- Building requests
-- Calling external APIs
-- Checking responses
-- Parsing external data
-- Mapping external data into application types
+Continue improving keyboard navigation, semantic HTML, labels, focus states, and screen-reader support.
 
-### Types describe application data
+### Automated testing
 
-The `types` directory provides the contracts used between services and
-components.
+Add unit and component tests for API mapping, Wikidata parsing, menu traversal, React components, and theme handling.
 
-This keeps API-specific response formats separate from the application's
-UI model.
+### API abstraction
 
-### Entity type is an application concern
+If the application grows, introduce a small backend or API layer for caching, request aggregation, and better control over external service calls.
 
-The entity categories are designed around how Wiki Voyage presents
-information.
+## Learning and Development Process
 
-They are not intended to reproduce the entire Wikidata ontology.
+This project was built as a learning project with a focus on understanding React, TypeScript, external APIs, structured data, and frontend architecture.
 
-Wikidata remains the underlying source of structured information.
+An important part of the development process was learning how to work with Wikidata rather than simply consuming a traditional REST API.
 
-### Keep generic Wikidata data generic
-
-The generic Wikidata view does not attempt to predict every possible
-Wikidata property.
-
-Instead, it retrieves additional statements dynamically and presents
-them grouped by property.
-
-This means the application can expose information that is not explicitly
-modeled in the category-specific UI.
-
----
-
-# Linking related entities
-
-When a Wikidata property points to another Wikidata item, the
-application attempts to obtain:
-
-```text
-Wikidata ID
-        +
-English label
-        +
-English Wikipedia article, if available
-```
-
-The UI then displays the label as a link.
-
-For example:
-
-```text
-Residence     Down House
-```
-
-rather than exposing an internal Wikidata URI directly.
-
-If no English Wikipedia article exists, the application can fall back to
-the Wikidata entity page.
-
----
-
-# Responsive and reusable UI
-
-The entity information components use a shared label/value layout.
-
-Typical structure:
-
-```text
-┌──────────────────┬────────────────────────────────────┐
-│ Birth date       │ 14 March 1879                      │
-│ Place of birth   │ Ulm                                │
-│ Nationality      │ German                             │
-│ Occupations      │ Physicist, Professor               │
-└──────────────────┴────────────────────────────────────┘
-```
-
-Lists of related entities can use multiple columns when there are
-several values.
-
-Long lists are collapsed initially and can be expanded by the user.
-
----
-
-# Current limitations
-
-This project is intentionally lightweight and currently has some areas that can be improved.
-
-### Error handling
-
-`EntityPage` currently performs several asynchronous API calls directly
-and does not yet provide a complete user-facing error state for every
-failure scenario.
-
-A production application could distinguish between:
-
-- Wikipedia unavailable
-- Wikidata unavailable
-- Commons unavailable
-- Entity not found
-- Network failure
-- API rate limiting
-
-### Loading states
-
-The current loading experience is intentionally simple.
-
-More polished loading states could use:
-
-- Skeleton components
-- Independent loading states for each source
-- Partial rendering when one source is unavailable
-
-### API calls
-
-The application calls Wikimedia APIs directly from the browser.
-
-A larger production application could introduce a backend/API layer for:
-
-- Caching
-- Rate limiting
-- Request aggregation
-- Server-side error handling
-- API monitoring
-
-### Menu search
-
-The current application uses a predefined exploration tree.
-
-A future version could provide direct entity search instead of requiring users to navigate the menu.
-
-### Theme typing
-
-The theme selector and CSS contain more theme names than the current `Theme` union in `ThemeContext.tsx`.
-
-Before extending the theme system further, the list of valid themes
-should be centralized so that the selector, TypeScript type, and CSS
-remain synchronized.
-
----
-
-# Possible future improvements
-
-Potential extensions include:
-
-- Search for any Wikipedia/Wikidata entity
-- Interactive maps for geographic entities
-- Wikidata statistics and visualizations
-- Entity relationship graphs
-- Improved dark/light theme handling
-- More mobile-specific navigation
-- Client-side caching
-- Parallel API requests
-- Automated tests
-- Accessibility improvements
-- More Wikimedia projects
-- Support for additional Wikipedia languages
-- Browser history integration
-- Shareable entity URLs
-- Favorites/bookmarks
-
----
-
-# 📚 Learning goals
-
-Wiki Voyage is also a practical learning project.
-
-It provides experience with:
+The project required understanding:
 
 - React component composition
-- React state and effects
-- Context API
-- TypeScript discriminated unions
-- Type-safe props
-- Recursive React components
-- Fetching REST APIs
-- Working with SPARQL
-- Mapping external data into domain models
+- TypeScript union types and interfaces
+- React state and context
+- Async data fetching
+- SPARQL queries
+- RDF-style relationships
+- Mapping external API responses into application-specific models
+- Responsive UI design
 - Tailwind CSS
 - CSS custom properties
-- Theme systems
-- Responsive layouts
-- Asynchronous UI
-- ESLint
-- Vite
-- Modern frontend project structure
+- Client-side persistence with `localStorage`
+- Production builds and deployment
 
-The project is intentionally structured so that the UI, domain types,
-API services, and static data have clear responsibilities.
+AI was used as a development aid for explanations, debugging, design discussions, and implementation guidance. The goal was to use AI to understand the underlying concepts and code rather than treating generated code as a black box.
 
----
+## Deployment
 
-# 📜 Available npm scripts
+The application is deployed using **Azure Static Web Apps**.
 
-```bash
-npm run dev
+https://jolly-desert-0090d2903.6.azurestaticapps.net/
+
+The production workflow is:
+
+```text
+Git repository
+      ↓
+Push to main
+      ↓
+GitHub Actions
+      ↓
+npm install / build
+      ↓
+Vite production build
+      ↓
+Azure Static Web Apps
 ```
 
-Start the Vite development server.
+The Vite build output directory is `dist`.
 
-```bash
-npm run build
-```
+## License
 
-Type-check and create a production build.
+This project is a personal educational and portfolio project.
 
-```bash
-npm run lint
-```
+The application uses data and services provided by Wikimedia projects. Their respective terms, licenses, and attribution requirements apply to content retrieved from those services.
 
-Run ESLint.
+## Author
 
-```bash
-npm run preview
-```
+**Per Söderberg**
 
-Preview the production build locally.
-
-These scripts are defined in `package.json`.
-fileciteturn84file0L53-L57
-
----
-
-# 📄 License
-
-No license has been specified for the project yet.
-
-If this project is going to be published publicly, add an appropriate
-license here.
-
----
-
-# 🙌 Credits
-
-Wiki Voyage builds on publicly available Wikimedia data and APIs:
-
-- Wikipedia
-- Wikidata
-- Wikimedia Commons
-
-The project is a frontend application that presents and combines
-information from these sources into a single exploratory interface.
-
----
-
-**Wiki Voyage --- Explore knowledge. Follow connections.**
+Fullstack / .NET Developer transitioning into modern frontend development with React and TypeScript.
